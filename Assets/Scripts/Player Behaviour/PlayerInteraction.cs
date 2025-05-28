@@ -1,24 +1,32 @@
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class PlayerInteraction : MonoBehaviour
 {
-    public Tilemap targetTilemap; // Assign in Inspector
-    public KeyCode interactionKey = KeyCode.E;
-    public Vector2 facingDirection = Vector2.down; // Could change based on player movement
+
+    [Header("Tile Interaction")]
+    public Tilemap targetTilemap;
+    public Vector2 facingDirection = Vector2.down;
     public float interactionDistance = 1f;
+    public TileBase dirtTile;
+    public TileBase[] grassTiles;
 
     void Update()
     {
-        if (Input.GetKeyDown(interactionKey))
+        HandleTileInteraction();
+    }
+
+    void HandleTileInteraction()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
         {
             Vector3Int tilePos = GetFacingTilePosition();
             TileBase tile = targetTilemap.GetTile(tilePos);
 
-            if (tile != null)
+            if (tile != null && grassTiles.Contains(tile))
             {
-                Debug.Log("Interacted with tile: " + tile.name);
-                // Add logic here: remove tile, trigger event, change sprite, etc.
+                targetTilemap.SetTile(tilePos, dirtTile);
             }
         }
     }
