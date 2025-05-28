@@ -1,5 +1,6 @@
+using System;
 using UnityEngine;
-
+using Soulstead.Enums;
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement parameters")]
@@ -8,10 +9,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float deceleration = 0.1f;
     [SerializeField] private float horizontalMovement;
     [SerializeField] private float verticalMovement;
-    [SerializeField] private Rigidbody2D playerRb;
+    private Rigidbody2D playerRb;
+    public event Action<Vector2> OnFacingDirectionChanged;
 
     private Vector2 currentVelocity;
-
 
     void Start()
     {
@@ -33,8 +34,12 @@ public class PlayerMovement : MonoBehaviour
         horizontalMovement = Input.GetAxisRaw("Horizontal");
         verticalMovement = Input.GetAxisRaw("Vertical");
         Vector2 inputVector = new Vector2(horizontalMovement, verticalMovement);
+        if ((inputVector.x == 0) ^ (inputVector.y == 0))
+        {
+            OnFacingDirectionChanged?.Invoke(inputVector.normalized);
+        }
+
         return inputVector.normalized;
     }
-    
     
 }

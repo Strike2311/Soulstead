@@ -1,6 +1,10 @@
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using System.Collections.Generic;
+using Soulstead.Enums;
+using UnityEditor;
+using System;
 
 public class PlayerInteraction : MonoBehaviour
 {
@@ -8,13 +12,33 @@ public class PlayerInteraction : MonoBehaviour
     [Header("Tile Interaction")]
     public Tilemap targetTilemap;
     public Vector2 facingDirection = Vector2.down;
-    public float interactionDistance = 1f;
+    public float interactionDistance = 0.3f;
     public TileBase dirtTile;
     public TileBase[] grassTiles;
 
+    public FacingDirection CurrentDirection { get; private set; }
+    private PlayerMovement playerMovementObject;
+    void Start()
+    {
+        grassTiles = TilemapUtility.LoadTilesFromFolder("GrassTiles");
+        playerMovementObject = gameObject.GetComponent<PlayerMovement>();
+        SubscribeToEvents();
+
+    }
     void Update()
     {
         HandleTileInteraction();
+    }
+
+    void SubscribeToEvents()
+    {
+        if (playerMovementObject != null)
+            playerMovementObject.OnFacingDirectionChanged += SetFacingDirection;
+    }
+
+    void SetFacingDirection(Vector2 newFacingDirection)
+    {
+        facingDirection = newFacingDirection;
     }
 
     void HandleTileInteraction()
@@ -30,7 +54,6 @@ public class PlayerInteraction : MonoBehaviour
             }
         }
     }
-
     Vector3Int GetFacingTilePosition()
     {
         Vector3 playerPos = transform.position;
