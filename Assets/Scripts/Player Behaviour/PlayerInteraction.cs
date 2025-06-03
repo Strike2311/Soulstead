@@ -1,9 +1,7 @@
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using System.Collections.Generic;
 using Soulstead.Enums;
-using UnityEditor;
 using System;
 
 public class PlayerInteraction : MonoBehaviour
@@ -50,6 +48,11 @@ public class PlayerInteraction : MonoBehaviour
 
             if (tile != null && grassTiles.Contains(tile))
             {
+                /*TileManager tileManager = GameObject.Find("Tile Manager");
+                Vector2Int tilePos = tilemap.WorldToCell(worldClickPosition);
+
+                tileManager.SetDug(tilePos, true);
+                tilemap.SetTile(tilePos, dugTile);*/
                 targetTilemap.SetTile(tilePos, dirtTile);
             }
         }
