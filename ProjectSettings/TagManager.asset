@@ -41,6 +41,12 @@ TagManager:
   - name: Ground
     uniqueID: 1153458027
     locked: 0
+  - name: Grass
+    uniqueID: 2631435065
+    locked: 0
+  - name: Decoration
+    uniqueID: 2833515283
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
