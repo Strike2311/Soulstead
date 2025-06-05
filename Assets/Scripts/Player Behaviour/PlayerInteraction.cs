@@ -11,14 +11,11 @@ public class PlayerInteraction : MonoBehaviour
     public Tilemap targetTilemap;
     public Vector2 facingDirection = Vector2.down;
     public float interactionDistance = 0.3f;
-    public TileBase dirtTile;
-    public TileBase[] grassTiles;
 
     public FacingDirection CurrentDirection { get; private set; }
     private PlayerMovement playerMovementObject;
     void Start()
     {
-        grassTiles = TilemapUtility.LoadTilesFromFolder("GrassTiles");
         playerMovementObject = gameObject.GetComponent<PlayerMovement>();
         SubscribeToEvents();
 
@@ -46,14 +43,9 @@ public class PlayerInteraction : MonoBehaviour
             Vector3Int tilePos = GetFacingTilePosition();
             TileBase tile = targetTilemap.GetTile(tilePos);
 
-            if (tile != null && grassTiles.Contains(tile))
+            if (tile != null)
             {
-                /*TileManager tileManager = GameObject.Find("Tile Manager");
-                Vector2Int tilePos = tilemap.WorldToCell(worldClickPosition);
-
-                tileManager.SetDug(tilePos, true);
-                tilemap.SetTile(tilePos, dugTile);*/
-                targetTilemap.SetTile(tilePos, dirtTile);
+                targetTilemap.SetTile(tilePos, null);
             }
         }
     }
