@@ -14,6 +14,7 @@ public class PlayerInteraction : MonoBehaviour
 
     public FacingDirection CurrentDirection { get; private set; }
     private PlayerMovement playerMovementObject;
+    public GameObject inventoryUI;
     void Start()
     {
         playerMovementObject = gameObject.GetComponent<PlayerMovement>();
@@ -22,7 +23,7 @@ public class PlayerInteraction : MonoBehaviour
     }
     void Update()
     {
-        HandleTileInteraction();
+        HandleUserKeypresses();
     }
 
     void SubscribeToEvents()
@@ -36,7 +37,7 @@ public class PlayerInteraction : MonoBehaviour
         facingDirection = newFacingDirection;
     }
 
-    void HandleTileInteraction()
+    void HandleUserKeypresses()
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
@@ -47,6 +48,10 @@ public class PlayerInteraction : MonoBehaviour
             {
                 targetTilemap.SetTile(tilePos, null);
             }
+        }
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            inventoryUI.SetActive(true);
         }
     }
     Vector3Int GetFacingTilePosition()
