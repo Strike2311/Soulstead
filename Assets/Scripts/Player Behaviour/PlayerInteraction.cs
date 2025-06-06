@@ -49,9 +49,10 @@ public class PlayerInteraction : MonoBehaviour
                 targetTilemap.SetTile(tilePos, null);
             }
         }
+
         if (Input.GetKeyDown(KeyCode.I))
         {
-            inventoryUI.SetActive(true);
+            inventoryUI.SetActive(!inventoryUI.activeSelf);
         }
     }
     Vector3Int GetFacingTilePosition()

@@ -44234,6 +44234,7 @@ MonoBehaviour:
   targetTilemap: {fileID: 529935118}
   facingDirection: {x: 0, y: -1}
   interactionDistance: 1
+  inventoryUI: {fileID: 1312977488}
 --- !u!114 &980554235
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44653,7 +44654,7 @@ GameObject:
   - component: {fileID: 1312977491}
   - component: {fileID: 1312977490}
   m_Layer: 5
-  m_Name: Inventory
+  m_Name: InventoryUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
