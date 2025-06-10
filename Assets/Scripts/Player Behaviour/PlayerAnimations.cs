@@ -6,8 +6,7 @@ public class PlayerAnimations : MonoBehaviour
     private PlayerMovement playerMovementObject;
     private SpriteRenderer spriteRenderer;
     public Animator playerAnimator;
-    private bool spriteVerticalRight = true;
-
+    [SerializeField] private bool isFacingRight = true;
     void Start()
     {
         playerMovementObject = gameObject.GetComponent<PlayerMovement>();
@@ -24,24 +23,24 @@ public class PlayerAnimations : MonoBehaviour
 
     void RenderPlayerSprite(Vector2 newFacingDirection)
     {
+        Debug.Log(newFacingDirection);
         if (newFacingDirection == Vector2.right)
         {
-            if (!spriteVerticalRight)
-            {   playerAnimator.SetFloat
-                _ = spriteRenderer.flipX;
-            }
+            if (!isFacingRight)
+                Flip();
         }
         else if (newFacingDirection == Vector2.left)
         {
-            if (spriteVerticalRight) {
-                _ = spriteRenderer.flipX;
-            }
+            if (isFacingRight)
+                Flip();
         }
-        /*else if (newFacingDirection == Vector2.down)
-        {
-        }
-        else
-        {
-        }*/
+    }
+
+    void Flip()
+    {
+        isFacingRight = !isFacingRight;
+        Vector3 localScale = transform.localScale;
+        localScale.x = -1f * localScale.x;
+        transform.localScale = localScale;
     }
 }
