@@ -44452,11 +44452,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f10e057e819d4014795995d989c1682f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerIdleSprites:
-  - {fileID: -6533847695526881575, guid: ee1e2dcf972be3742bf624e5cab0ec60, type: 3}
-  - {fileID: 3356509150621304217, guid: ee1e2dcf972be3742bf624e5cab0ec60, type: 3}
-  - {fileID: -7184988889111192956, guid: ee1e2dcf972be3742bf624e5cab0ec60, type: 3}
-  - {fileID: -4777296485447738094, guid: ee1e2dcf972be3742bf624e5cab0ec60, type: 3}
   playerAnimator: {fileID: 0}
   isFacingRight: 1
 --- !u!95 &980554238

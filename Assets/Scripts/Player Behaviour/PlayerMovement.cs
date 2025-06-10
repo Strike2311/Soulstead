@@ -12,7 +12,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D playerRb;
     public event Action<Vector2> OnFacingDirectionChanged;
 
-    private Vector2 currentVelocity;
+    public Vector2 currentVelocity { get; private set; }
 
     void Start()
     {

@@ -2,17 +2,18 @@ using UnityEngine;
 
 public class PlayerAnimations : MonoBehaviour
 {
-    [SerializeField] private Sprite[] playerIdleSprites;
     private PlayerMovement playerMovementObject;
-    private SpriteRenderer spriteRenderer;
     public Animator playerAnimator;
     [SerializeField] private bool isFacingRight = true;
     void Start()
     {
         playerMovementObject = gameObject.GetComponent<PlayerMovement>();
-        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         playerAnimator = gameObject.GetComponent<Animator>();
         SubscribeToEvents();
+    }
+    void Update()
+    {
+        playerAnimator.SetFloat("Speed", playerMovementObject.currentVelocity.magnitude);
     }
     void SubscribeToEvents()
     {
@@ -23,17 +24,10 @@ public class PlayerAnimations : MonoBehaviour
 
     void RenderPlayerSprite(Vector2 newFacingDirection)
     {
-        Debug.Log(newFacingDirection);
-        if (newFacingDirection == Vector2.right)
-        {
-            if (!isFacingRight)
-                Flip();
-        }
-        else if (newFacingDirection == Vector2.left)
-        {
-            if (isFacingRight)
-                Flip();
-        }
+        bool playerTurnedRight = newFacingDirection == Vector2.right;
+        bool playerTurnedLeft = newFacingDirection == Vector2.left;
+        if ((playerTurnedRight && !isFacingRight) || (playerTurnedLeft && isFacingRight))
+            Flip();
     }
 
     void Flip()
