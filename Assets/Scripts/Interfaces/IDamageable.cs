@@ -2,7 +2,7 @@ namespace Soulstead.Interfaces
 {
     public interface IDamageable
     {
-        void TakeDamage(int amount);
+        void TakeDamage(float amount);
         void Die();
     }
 }
