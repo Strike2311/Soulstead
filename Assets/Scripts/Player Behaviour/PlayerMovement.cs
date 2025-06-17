@@ -7,10 +7,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float movementSpeed = 10f;
     [SerializeField] private float acceleration = 0.1f;
     [SerializeField] private float deceleration = 0.1f;
-    [SerializeField] private float horizontalMovement;
-    [SerializeField] private float verticalMovement;
+    [SerializeField] public float horizontalMovement { get; private set; }
+    [SerializeField] public float verticalMovement { get; private set; }
     private Rigidbody2D playerRb;
     public event Action<Vector2> OnFacingDirectionChanged;
+    public Vector2 movementDirectionVector { get; private set; }
 
     public Vector2 currentVelocity { get; private set; }
 
@@ -33,13 +34,13 @@ public class PlayerMovement : MonoBehaviour
     {
         horizontalMovement = Input.GetAxisRaw("Horizontal");
         verticalMovement = Input.GetAxisRaw("Vertical");
-        Vector2 inputVector = new Vector2(horizontalMovement, verticalMovement);
-        if ((inputVector.x == 0) ^ (inputVector.y == 0))
-        {
-            OnFacingDirectionChanged?.Invoke(inputVector.normalized);
-        }
+        movementDirectionVector = new Vector2(horizontalMovement, verticalMovement);
 
-        return inputVector.normalized;
+        if ((movementDirectionVector.x == 0) ^ (movementDirectionVector.y == 0))
+        {
+            OnFacingDirectionChanged?.Invoke(movementDirectionVector.normalized);
+        }
+        return movementDirectionVector.normalized;
     }
     
 }

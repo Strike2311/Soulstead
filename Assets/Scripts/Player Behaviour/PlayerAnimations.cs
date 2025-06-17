@@ -9,24 +9,16 @@ public class PlayerAnimations : MonoBehaviour
     {
         playerMovementObject = gameObject.GetComponent<PlayerMovement>();
         playerAnimator = gameObject.GetComponent<Animator>();
-        SubscribeToEvents();
     }
     void Update()
     {
         playerAnimator.SetFloat("Speed", playerMovementObject.currentVelocity.magnitude);
-    }
-    void SubscribeToEvents()
-    {
-        if (playerMovementObject != null)
-            playerMovementObject.OnFacingDirectionChanged += RenderPlayerSprite;
+        RenderPlayerSprite();
     }
 
-
-    void RenderPlayerSprite(Vector2 newFacingDirection)
+    void RenderPlayerSprite()
     {
-        bool playerTurnedRight = newFacingDirection == Vector2.right;
-        bool playerTurnedLeft = newFacingDirection == Vector2.left;
-        if ((playerTurnedRight && !isFacingRight) || (playerTurnedLeft && isFacingRight))
+        if ((playerMovementObject.horizontalMovement == 1 && !isFacingRight) || (playerMovementObject.horizontalMovement == -1 && isFacingRight))
             Flip();
     }
 
