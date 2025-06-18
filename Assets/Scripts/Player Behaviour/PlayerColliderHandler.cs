@@ -37,7 +37,7 @@ public class PlayerColliderHandler : MonoBehaviour
         {
             Debug.Log("Picked Up");
             playerXP.GainXP(collision.GetComponent<PickupXP>().xp);
-            Destroy(collision);
+            Destroy(collision.gameObject);
         }
 
         /*if (collision.CompareTag("Pickup_HP"))
