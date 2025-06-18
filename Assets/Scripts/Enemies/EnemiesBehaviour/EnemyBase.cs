@@ -1,4 +1,6 @@
+using System;
 using Soulstead.Interfaces;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public abstract class EnemyBase : MonoBehaviour, IDamageable, IDamageDealer
@@ -10,6 +12,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable, IDamageDealer
     protected float damage;
     protected Transform player;
     protected Rigidbody2D rb;
+    public event Action<int> OnDeath;
 
     [SerializeField] protected EnemyStats stats;
 
@@ -30,8 +33,18 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable, IDamageDealer
 
     protected abstract void HandleBehaviour();
 
+    public virtual void OnTriggerEnter2D(UnityEngine.Collider2D collision)
+    {
+        if (collision.CompareTag("Projectile"))
+        {
+            TakeDamage(collision.GetComponent<ProjectileParams>().damage);
+            Destroy(collision.gameObject);
+        }
+    }
     public virtual void TakeDamage(float damage)
     {
+        Vector3 direction = (transform.position - player.transform.position).normalized;
+        rb.AddForce(direction.normalized * 100, ForceMode2D.Impulse);
         float effectiveDamage = Mathf.Max(0, damage - armor);
         health -= effectiveDamage;
         if (health <= 0) Die();
@@ -39,6 +52,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable, IDamageDealer
 
     public virtual void Die()
     {
+        OnDeath?.Invoke(1);
         Destroy(gameObject);
     }
     
