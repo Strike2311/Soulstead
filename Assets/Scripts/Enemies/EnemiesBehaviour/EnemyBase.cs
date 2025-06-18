@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Soulstead.Interfaces;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
@@ -10,6 +11,8 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable, IDamageDealer
     protected float armor;
     protected float speed;
     protected float damage;
+    protected int xpValue;
+    [SerializeField] private Dictionary<string, GameObject> pickupXpDictionary;
     protected Transform player;
     protected Rigidbody2D rb;
     public event Action<int> OnDeath;
@@ -24,6 +27,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable, IDamageDealer
         armor = stats.armor;
         speed = stats.speed;
         damage = stats.damage;
+        xpValue = stats.xpValue;
     }
 
     protected virtual void Update()
@@ -54,6 +58,8 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable, IDamageDealer
     {
         OnDeath?.Invoke(1);
         Destroy(gameObject);
+        XPDropper dropper = GetComponent<XPDropper>();
+        dropper.DropXP(xpValue);
     }
     
     public float GetDamage()

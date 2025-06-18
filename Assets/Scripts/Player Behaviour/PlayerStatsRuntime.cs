@@ -11,6 +11,9 @@ public class PlayerStatsRuntime : MonoBehaviour
     public float moveSpeed => baseStats.moveSpeed;
     public float damage => baseStats.damage;
     public float range => baseStats.range;
+    public int level => baseStats.level;
+    public int xp => baseStats.xp;
+    public int xpToNextLevel => baseStats.xpToNextLevel;
 
     [Header("External Objects")]
     public GameManager gameManagerObject;

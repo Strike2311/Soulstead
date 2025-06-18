@@ -16,4 +16,5 @@ MonoBehaviour:
   armor: 0
   speed: 5
   damage: 2
+  xpValue: 10
   chargeDelay: 0

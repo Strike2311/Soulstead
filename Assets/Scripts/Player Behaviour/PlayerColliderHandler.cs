@@ -10,11 +10,20 @@ public class PlayerColliderHandler : MonoBehaviour
     private SpriteRenderer playerSpriteRenderer;
     [SerializeField] private int flashCount = 3;
     [SerializeField] private float flashDuration = 0.1f;
+    [SerializeField] private PlayerStatsData playerStats; 
+    [SerializeField] private PlayerXP playerXP; 
     private Color flashColor = Color.red;
 
     void Awake()
     {
+        playerXP = gameObject.GetComponent<PlayerXP>();
         playerSpriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+        playerXP.OnLevelUp += HandleLevelUp;
+    }
+
+    void HandleLevelUp(int newLevel)
+    {
+        Debug.Log("Player Level Up");
     }
     void OnTriggerEnter2D(UnityEngine.Collider2D collision)
     {
@@ -23,6 +32,19 @@ public class PlayerColliderHandler : MonoBehaviour
             StartCoroutine(OnDamageTaken(collision.GetComponent<IDamageDealer>().GetDamage()));
             isDamageable = false;
         }
+
+        if (collision.CompareTag("Pickup_XP"))
+        {
+            Debug.Log("Picked Up");
+            playerXP.GainXP(collision.GetComponent<PickupXP>().xp);
+            Destroy(collision);
+        }
+
+        /*if (collision.CompareTag("Pickup_HP"))
+        {
+
+            Destroy(collision);
+        }*/
     }
 
     IEnumerator OnDamageTaken(float damage)

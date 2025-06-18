@@ -16,3 +16,8 @@ MonoBehaviour:
   armor: 1
   moveSpeed: 5
   damage: 20
+  range: 20
+  gathering: 10
+  xp: 70
+  level: 1
+  xpToNextLevel: 100
