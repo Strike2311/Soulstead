@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81224c974aa38ff4f8e04148c2bfcd73, type: 3}
   m_Name: SlimeStats
   m_EditorClassIdentifier: 
-  health: 20
-  armor: 1
-  speed: 2
+  health: 5
+  armor: 0
+  speed: 5
   damage: 2
   chargeDelay: 0
