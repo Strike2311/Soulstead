@@ -46616,7 +46616,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   detectionLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
 --- !u!1001 &993315653
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class ItemGathering : MonoBehaviour
 {
-    private float gatherRange = 10f;
-    private float speed = 10f;
+    private float gatherRange = 5f;
+    private float speed = 7f;
     public LayerMask detectionLayer;
     void Update()
     {

@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 7152879739640671605}
   - component: {fileID: 7887414159631744268}
   - component: {fileID: -4764719714963286526}
-  m_Layer: 0
+  - component: {fileID: 2620563651495121230}
+  m_Layer: 3
   m_Name: Pickup_XP_500
   m_TagString: Pickup_XP
   m_Icon: {fileID: 0}
@@ -148,3 +149,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 11400000, guid: e8f55e421ff551d41bc1df6bf8929ce2, type: 2}
+--- !u!50 &2620563651495121230
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2098583931048269916}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
