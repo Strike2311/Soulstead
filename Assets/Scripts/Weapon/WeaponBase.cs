@@ -14,7 +14,6 @@ public abstract class WeaponBase : MonoBehaviour
     protected Transform target;
 
     // Static list to prevent duplicate targeting
-    protected static HashSet<GameObject> targetedEnemies = new HashSet<GameObject>();
 
     protected virtual void Update()
     {
@@ -23,11 +22,10 @@ public abstract class WeaponBase : MonoBehaviour
 
         if (CanAttack())
         {
-            target = GetClosestUntargetedEnemy();
+            target = GetClosestEnemy();
 
             if (target != null)
             {
-                targetedEnemies.Add(target.gameObject);
                 FireAt(target);
                 ResetCooldown();
             }
@@ -50,8 +48,6 @@ public abstract class WeaponBase : MonoBehaviour
         bullet.GetComponent<ProjectileParams>().damage = damage;
         bullet.GetComponent<Rigidbody2D>().linearVelocity = direction * projectileSpeed;
         AddBulletRotation(bullet, direction);
-        // Optionally clear from targeting after shot
-        StartCoroutine(ClearTargetAfterDelay(target.gameObject, 0.1f));
     }
 
     protected virtual void AddBulletRotation(GameObject bullet, Vector2 direction)
@@ -60,7 +56,7 @@ public abstract class WeaponBase : MonoBehaviour
         bullet.transform.rotation = Quaternion.Euler(0f, 0f, angle);
     }
 
-    protected virtual Transform GetClosestUntargetedEnemy()
+    protected virtual Transform GetClosestEnemy()
     {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         Transform closest = null;
@@ -68,8 +64,6 @@ public abstract class WeaponBase : MonoBehaviour
 
         foreach (GameObject enemy in enemies)
         {
-            if (targetedEnemies.Contains(enemy)) continue;
-
             float dist = Vector2.Distance(transform.position, enemy.transform.position);
             if (dist < closestDist)
             {
@@ -79,13 +73,4 @@ public abstract class WeaponBase : MonoBehaviour
         }
 
         return closest;
-    }
-
-    protected System.Collections.IEnumerator ClearTargetAfterDelay(GameObject enemy, float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        targetedEnemies.Remove(enemy);
-    }
-
-    public void ClearTargetedEnemies() => targetedEnemies.Clear(); // Call on wave end or death
-}
+    }}

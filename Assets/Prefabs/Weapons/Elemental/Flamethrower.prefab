@@ -46,8 +46,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackRate: 1
   projectileSpeed: 10
-  projectilePrefab: {fileID: 0}
+  projectilePrefab: {fileID: 3270312325142438144, guid: e6958055c59e35043b6c10eb10294070, type: 3}
   range: 5
   damage: 5
-  burnDuration: 2
+  flameRange: 5
   coneAngle: 45
+  damagePerSecond: 10
+  burstDuration: 2
+  cooldownBetweenBursts: 1
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 64
