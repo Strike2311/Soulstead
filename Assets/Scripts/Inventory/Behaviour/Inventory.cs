@@ -7,8 +7,8 @@ public class Inventory : MonoBehaviour
     public List<InventorySlot> slots = new List<InventorySlot>();
     void Awake()
     {
-        for (int i = 0; i < size; i++)
-            slots.Add(new InventorySlot());
+       // for (int i = 0; i < size; i++)
+         //   slots.Add(new InventorySlot());
     }   
 
     public bool AddItem(InventoryItem item, int amount = 1)

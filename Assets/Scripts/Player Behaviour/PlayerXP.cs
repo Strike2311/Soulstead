@@ -7,7 +7,7 @@ public class PlayerXP : MonoBehaviour
     
     [SerializeField] private AnimationCurve xpGrowthCurve;
 
-    public event Action<int> OnLevelUp;
+    public event Action OnLevelUp;
 
     private void Start()
     {
@@ -23,7 +23,7 @@ public class PlayerXP : MonoBehaviour
             stats.xp -= stats.xpToNextLevel;
             stats.level++;
             stats.xpToNextLevel = GetXPRequirement(stats.level);
-            OnLevelUp?.Invoke(stats.level);
+            OnLevelUp?.Invoke();
         }
     }
 

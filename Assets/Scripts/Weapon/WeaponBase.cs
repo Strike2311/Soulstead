@@ -9,27 +9,23 @@ public abstract class WeaponBase : MonoBehaviour
     [SerializeField] protected GameObject projectilePrefab;
     [SerializeField] protected float range = 5f;
     [SerializeField] protected float damage = 5f;
+    protected GameObject player;
 
     protected float attackCooldown = 0f;
     protected Transform target;
 
     // Static list to prevent duplicate targeting
 
+    void Awake()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+    }
     protected virtual void Update()
     {
-        attackCooldown -= Time.deltaTime;
-        if (attackCooldown < 0f) attackCooldown = 0f;
-
-        if (CanAttack())
-        {
-            target = GetClosestEnemy();
-
-            if (target != null)
-            {
-                FireAt(target);
-                ResetCooldown();
-            }
-        }
+        Vector3 weaponPos = gameObject.transform.position;
+        weaponPos = player.transform.position;
+        weaponPos.y += 0.5f;
+        gameObject.transform.position = weaponPos;
     }
 
     protected virtual bool CanAttack() => attackCooldown <= 0f;

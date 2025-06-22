@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerStatsRuntime : MonoBehaviour
@@ -9,7 +10,7 @@ public class PlayerStatsRuntime : MonoBehaviour
     public float currentHealth { get; private set; }
     public float armor => baseStats.armor;
     public float moveSpeed => baseStats.moveSpeed;
-    public float damage => baseStats.damage;
+    public float damageModifier => baseStats.damageModifier;
     public float range => baseStats.range;
     public int level => baseStats.level;
     public int xp => baseStats.xp;
@@ -22,6 +23,10 @@ public class PlayerStatsRuntime : MonoBehaviour
     {
         gameManagerObject = GameObject.Find("Game Manager").GetComponent<GameManager>();
         currentHealth = baseStats.maxHealth;
+    }
+    public void DealDamage(EnemyBase enemy, int damage)
+    {
+        enemy.TakeDamage(damage*damageModifier);
     }
 
     public void TakeDamage(float amount)

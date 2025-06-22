@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Soulstead.Interfaces;
@@ -21,11 +22,12 @@ public class PlayerColliderHandler : MonoBehaviour
         playerXP.OnLevelUp += HandleLevelUp;
     }
 
-    void HandleLevelUp(int newLevel)
+    private void HandleLevelUp()
     {
-        Debug.Log("Player Level Up");
+        Debug.Log("Level Up");
     }
-    void OnTriggerEnter2D(UnityEngine.Collider2D collision)
+
+    void OnTriggerEnter2D(Collider2D collision)
     {
         if (isDamageable && collision.CompareTag("Enemy"))
         {
@@ -39,12 +41,6 @@ public class PlayerColliderHandler : MonoBehaviour
             playerXP.GainXP(collision.GetComponent<PickupXP>().xp);
             Destroy(collision.gameObject);
         }
-
-        /*if (collision.CompareTag("Pickup_HP"))
-        {
-
-            Destroy(collision);
-        }*/
     }
 
     IEnumerator OnDamageTaken(float damage)

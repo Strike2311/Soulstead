@@ -14,10 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 20
   armor: 1
+  dodge: 0
   moveSpeed: 5
-  damage: 20
+  castSpeed: 0
+  attackSpeed: 0
+  lifeSteal: 0
+  damageModifier: 1
   range: 20
+  critDamage: 1.2
+  critChance: 0
+  pierce: 3
+  pickupRadius: 1.5
+  luck: 0
   gathering: 10
-  xp: 70
-  level: 1
-  xpToNextLevel: 100
+  xp: 16
+  level: 4
+  xpToNextLevel: 173

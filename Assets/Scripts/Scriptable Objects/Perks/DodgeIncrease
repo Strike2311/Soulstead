@@ -1,0 +1,16 @@
+using UnityEngine;
+
+[CreateAssetMenu(fileName = "DodgeIncreaseEffect", menuName = "Perks/Dodge Increase")]
+public class DodgeIncreaseEffect : PerkEffect
+{
+    public int bonusDodge = 5;
+
+    public override void Apply(GameObject player)
+    {
+        PlayerStatsData stats = player.GetComponent<PlayerStatsData>();
+        if (stats != null)
+        {
+            stats.dodge += bonusDodge;
+        }
+    }
+}

@@ -10,16 +10,23 @@ public class Flamethrower : WeaponBase
     public float burstDuration = 2f;
     public float cooldownBetweenBursts = 1f;
     public LayerMask enemyLayer;
-
+    private Animator animator;
     private bool isFiring;
+    private Transform currentTarget;
+    private Vector2 cachedFlameDirection;
+
+
+
 
     protected override void Update()
     {
+        base.Update();
         if (!isFiring)
         {
             Transform target = GetClosestEnemy();
             if (target != null)
             {
+                animator = gameObject.GetComponent<Animator>();
                 StartCoroutine(FlameBurst(target));
             }
         }
@@ -28,34 +35,40 @@ public class Flamethrower : WeaponBase
     private IEnumerator FlameBurst(Transform target)
     {
         isFiring = true;
-        float time = 0f;
+    currentTarget = target;
+    animator.SetBool("FlamethrowerBurst", true);
 
-        while (time < burstDuration && target != null)
-        {
-            FireConeAt(target);
-            time += Time.deltaTime;
-            yield return null;
-        }
+    // Cache direction ONCE
+    cachedFlameDirection = ((Vector2)(target.position - player.transform.position)).normalized;
 
-        yield return new WaitForSeconds(cooldownBetweenBursts);
-        isFiring = false;
+    float time = 0f;
+    while (time < burstDuration && target != null)
+    {
+        FireAt();
+        time += Time.deltaTime;
+        yield return null;
     }
 
-    private void FireConeAt(Transform target)
-    {
-        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, flameRange, enemyLayer);
+    animator.SetBool("FlamethrowerBurst", false);
+    yield return new WaitForSeconds(cooldownBetweenBursts);
+    isFiring = false;
+    }
 
-        Vector2 flameOrigin = transform.position;
-        Vector2 flameDir = (new Vector2 (target.position.x, target.position.y) - flameOrigin).normalized;
+    protected void FireAt()
+    {
+        Vector2 flameOrigin = player.transform.position;
+        float angle = Mathf.Atan2(cachedFlameDirection.y, cachedFlameDirection.x) * Mathf.Rad2Deg;
+        animator.transform.rotation = Quaternion.Euler(0f, 0f, angle);
+
+        Collider2D[] hits = Physics2D.OverlapCircleAll(flameOrigin, flameRange, enemyLayer);
         foreach (var hit in hits)
         {
-            Debug.Log("Hit: " + hit.name);
             if (hit.TryGetComponent(out EnemyBase enemy))
             {
                 Vector2 toEnemy = ((Vector2)hit.transform.position - flameOrigin).normalized;
-                float angle = Vector2.Angle(flameDir, toEnemy);
-                Debug.Log("Angle " + angle);
-                if (angle < coneAngle / 2f)
+                float angleToEnemy = Vector2.Angle(cachedFlameDirection, toEnemy);
+
+                if (angleToEnemy <= coneAngle / 2f)
                 {
                     enemy.TakeDamage(damagePerSecond * Time.deltaTime);
                 }
@@ -63,9 +76,39 @@ public class Flamethrower : WeaponBase
         }
     }
 
-    private void OnDrawGizmosSelected()
+    private void OnDrawGizmos()
     {
+        if (currentTarget == null) return;
+
+        UnityEngine.Vector2 origin = transform.position;
+        UnityEngine.Vector2 dir = cachedFlameDirection.normalized;
+
+        float halfAngle = coneAngle / 2f;
+        float radius = flameRange;
+
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, flameRange);
+
+        // Cone boundaries
+        UnityEngine.Vector2 leftDir = UnityEngine.Quaternion.Euler(0, 0, -halfAngle) * dir;
+        UnityEngine.Vector2 rightDir = UnityEngine.Quaternion.Euler(0, 0, halfAngle) * dir;
+
+        Gizmos.DrawLine(origin, origin + leftDir * radius);
+        Gizmos.DrawLine(origin, origin + rightDir * radius);
+
+        // Optional: draw arc using multiple segments
+        int segments = 20;
+        UnityEngine.Vector3 tmpVector3 = UnityEngine.Quaternion.Euler(0, 0, -halfAngle) * dir * radius;
+        UnityEngine.Vector2 tmpVector2 = new UnityEngine.Vector2 (tmpVector3.x, tmpVector3.y);
+        UnityEngine.Vector2 prevPoint = origin + tmpVector2;
+
+        for (int i = 1; i <= segments; i++)
+        {
+            float angle = -halfAngle + (coneAngle / segments) * i;
+            UnityEngine.Vector2 segDir = UnityEngine.Quaternion.Euler(0, 0, angle) * dir;
+            UnityEngine.Vector2 point = origin + segDir * radius;
+
+            Gizmos.DrawLine(prevPoint, point);
+            prevPoint = point;
+        }
     }
 }
