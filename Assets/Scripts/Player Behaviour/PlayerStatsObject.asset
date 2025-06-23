@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fc607522cdd0694b8fe3cb250998b62, type: 3}
   m_Name: PlayerStatsObject
   m_EditorClassIdentifier: 
-  maxHealth: 20
+  maxHealth: 30
   armor: 1
   dodge: 0
   moveSpeed: 5
@@ -22,11 +22,11 @@ MonoBehaviour:
   damageModifier: 1
   range: 20
   critDamage: 1.2
-  critChance: 0
+  critChance: 5
   pierce: 3
   pickupRadius: 1.5
   luck: 0
   gathering: 10
-  xp: 16
-  level: 4
-  xpToNextLevel: 173
+  xp: 0
+  level: 1
+  xpToNextLevel: 100

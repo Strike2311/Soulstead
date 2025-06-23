@@ -13,7 +13,7 @@ public class PerkManager : MonoBehaviour
     public List<Perk> allPerks;
     private GameObject player;
 
-    private PlayerStatsData stats;
+    public PlayerStatsData stats;
     private PlayerXP playerXP;
 
     void Start()

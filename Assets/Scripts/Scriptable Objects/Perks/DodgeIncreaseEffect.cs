@@ -3,14 +3,12 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "DodgeIncreaseEffect", menuName = "Perks/Dodge Increase")]
 public class DodgeIncreaseEffect : PerkEffect
 {
-    public int bonusDodge = 5;
-
-    public override void Apply(GameObject player)
+    public int bonusValue = 5;
+    public override void Apply(PlayerStatsData stats)
     {
-        PlayerStatsData stats = player.GetComponent<PlayerStatsData>();
         if (stats != null)
         {
-            stats.dodge += bonusDodge;
+            stats.dodge += bonusValue;
         }
     }
 }

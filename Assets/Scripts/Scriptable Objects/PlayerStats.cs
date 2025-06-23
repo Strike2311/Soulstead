@@ -7,7 +7,7 @@ public class PlayerStatsData : ScriptableObject
 
     [Header("Core Stats")]
     public int maxHealth = 20;
-    public int armor = 0;
+    public int armour = 0;
     [Range(0f, 1f)]
     public float dodge = 0f;
 
@@ -40,7 +40,6 @@ public class PlayerStatsData : ScriptableObject
 
     [Header("Level")]
 
-    public float gathering = 10;
     public int xp = 0;
     public int level = 1;
     public int xpToNextLevel = 100;

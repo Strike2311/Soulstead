@@ -8,7 +8,7 @@ public class PlayerStatsRuntime : MonoBehaviour
 
     [Header("Runtime Stats")]
     public float currentHealth { get; private set; }
-    public float armor => baseStats.armor;
+    public float armour => baseStats.armour;
     public float moveSpeed => baseStats.moveSpeed;
     public float damageModifier => baseStats.damageModifier;
     public float range => baseStats.range;
@@ -31,7 +31,7 @@ public class PlayerStatsRuntime : MonoBehaviour
 
     public void TakeDamage(float amount)
     {
-        float effectiveDamage = Mathf.Max(0, amount - armor);
+        float effectiveDamage = Mathf.Max(0, amount - armour);
         currentHealth -= effectiveDamage;
         Debug.Log($"Player took {effectiveDamage} damage. Health now: {currentHealth}");
 
