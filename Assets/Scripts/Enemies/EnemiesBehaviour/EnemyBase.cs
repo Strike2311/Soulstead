@@ -16,8 +16,10 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable, IDamageDealer
     protected Transform player;
     protected Rigidbody2D rb;
     public event Action<int> OnDeath;
+    private int pierceCounter;
 
     [SerializeField] protected EnemyStats stats;
+    [SerializeField] protected PlayerStatsData playerStats;
 
     protected virtual void Start()
     {
@@ -42,7 +44,11 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable, IDamageDealer
         if (collision.CompareTag("Projectile"))
         {
             TakeDamage(collision.GetComponent<ProjectileParams>().damage);
-            Destroy(collision.gameObject);
+            pierceCounter++;
+            if (pierceCounter >= playerStats.pierce) {
+               Destroy(collision.gameObject); 
+            }
+            
         }
     }
     public virtual void TakeDamage(float damage)
@@ -50,9 +56,10 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable, IDamageDealer
         Vector3 direction = (transform.position - player.transform.position).normalized;
         rb.AddForce(direction.normalized * 100, ForceMode2D.Impulse);
         float effectiveDamage = Mathf.Max(0, damage - armor);
-        health -= effectiveDamage;
+        health -= playerStats.CalculateDamage(effectiveDamage);
         if (health <= 0) Die();
     }
+
 
     public virtual void Die()
     {

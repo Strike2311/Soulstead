@@ -3,12 +3,12 @@ using UnityEngine;
 
 public class ItemGathering : MonoBehaviour
 {
-    private float gatherRange = 5f;
     private float speed = 7f;
+    [SerializeField] private PlayerStatsData playerStats;
     public LayerMask detectionLayer;
     void Update()
     {
-        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, gatherRange, detectionLayer);
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, playerStats.pickupRadius, detectionLayer);
 
         foreach (Collider2D hit in hits)
         {
