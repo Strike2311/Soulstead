@@ -5,11 +5,11 @@ using UnityEngine;
 public class PlayerStatsData : ScriptableObject
 {
     [Header("Core Stats")]
-    private int baseMaxHealth = 20;
-    public int maxHealth;
-    public int currentHealth;
-    private int baseArmour = 0;
-    public int armour;
+    private float baseMaxHealth = 20;
+    public float maxHealth;
+    public float currentHealth;
+    private float baseArmour = 0;
+    public float armour;
     private float baseDodge = 0f;
     [Range(0f, 1f)]
     public float dodge;
@@ -105,12 +105,10 @@ public class PlayerStatsData : ScriptableObject
     }
 
     public void ApplyLifeSteal(float damageDealt)
-{
-    float lifeStolenRaw = damageDealt * lifeSteal;
+    {
+        float lifeStolen = damageDealt * lifeSteal;
 
-    int lifeToHeal = Mathf.FloorToInt(lifeStolenRaw);
-
-    currentHealth += Math.Min(maxHealth - currentHealth, lifeToHeal);
-    
-}
+        currentHealth += Math.Min(maxHealth - currentHealth, lifeStolen);
+        
+    }
 }

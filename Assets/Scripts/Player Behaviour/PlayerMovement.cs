@@ -4,7 +4,6 @@ using Soulstead.Enums;
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement parameters")]
-    [SerializeField] private float movementSpeed = 10f;
     [SerializeField] private float acceleration = 0.1f;
     [SerializeField] private float deceleration = 0.1f;
     [SerializeField] public float horizontalMovement { get; private set; }
@@ -14,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
     public Vector2 movementDirectionVector { get; private set; }
 
     public Vector2 currentVelocity { get; private set; }
+    public PlayerStatsData playerStats;
 
     void Start()
     {
@@ -23,7 +23,7 @@ public class PlayerMovement : MonoBehaviour
     void FixedUpdate()
     {
         Vector2 normalizedMovementVector = GetMovementVector();
-        Vector2 targetVelocity = normalizedMovementVector * movementSpeed;
+        Vector2 targetVelocity = normalizedMovementVector * playerStats.moveSpeed;
         float accelerationRate = (normalizedMovementVector.magnitude > 0.1f) ? acceleration : deceleration;
 
         currentVelocity = Vector2.MoveTowards(currentVelocity, targetVelocity, accelerationRate * Time.fixedDeltaTime);
@@ -42,5 +42,4 @@ public class PlayerMovement : MonoBehaviour
         }
         return movementDirectionVector.normalized;
     }
-    
 }

@@ -6,15 +6,7 @@ public class PlayerStatsRuntime : MonoBehaviour
     [Header("Base Stats")]
     public PlayerStatsData baseStats;
 
-    [Header("Runtime Stats")]
-    public float currentHealth { get; private set; }
-    public float armour => baseStats.armour;
-    public float moveSpeed => baseStats.moveSpeed;
-    public float damageModifier => baseStats.damageModifier;
-    public float range => baseStats.range;
-    public int level => baseStats.level;
-    public int xp => baseStats.xp;
-    public int xpToNextLevel => baseStats.xpToNextLevel;
+
 
     [Header("External Objects")]
     public GameManager gameManagerObject;
@@ -22,20 +14,29 @@ public class PlayerStatsRuntime : MonoBehaviour
     void Start()
     {
         gameManagerObject = GameObject.Find("Game Manager").GetComponent<GameManager>();
-        currentHealth = baseStats.maxHealth;
+        baseStats.currentHealth = baseStats.maxHealth;
     }
     public void DealDamage(EnemyBase enemy, int damage)
     {
-        enemy.TakeDamage(damage*damageModifier);
+        enemy.TakeDamage(damage * baseStats.damageModifier);
     }
 
     public void TakeDamage(float amount)
     {
-        float effectiveDamage = Mathf.Max(0, amount - armour);
-        currentHealth -= effectiveDamage;
-        Debug.Log($"Player took {effectiveDamage} damage. Health now: {currentHealth}");
+        float randomNumber = UnityEngine.Random.Range(0f, 1f);
+        if (randomNumber <= baseStats.dodge)
+        {
+            float effectiveDamage = Mathf.Max(0, amount - baseStats.armour);
+            baseStats.currentHealth -= effectiveDamage;
+            Debug.Log($"Player took {effectiveDamage} damage. Health now: {baseStats.currentHealth}");
+        }
+        else
+        {
+            Debug.Log($"Player dodged!");
+        }
 
-        if (currentHealth <= 0)
+
+        if (baseStats.currentHealth <= 0)
         {
             Die();
         }
@@ -43,11 +44,31 @@ public class PlayerStatsRuntime : MonoBehaviour
 
     public void Heal(float amount)
     {
-        currentHealth = Mathf.Min(currentHealth + amount, baseStats.maxHealth);
+        baseStats.currentHealth = Mathf.Min(baseStats.currentHealth + amount, baseStats.maxHealth);
     }
 
     private void Die()
     {
         gameManagerObject.GameOver();
+    }
+    
+    public float CalculateDamage(float damage)
+    {
+        float randomNumber = UnityEngine.Random.Range(0f, 1f);
+        if (randomNumber <= baseStats.critChance)
+        {
+            damage += damage * baseStats.critDamage;
+        }
+        ApplyLifeSteal(damage);
+
+        return damage;
+    }
+
+    public void ApplyLifeSteal(float damageDealt)
+    {
+        float lifeStolen = damageDealt * baseStats.lifeSteal;
+
+        baseStats.currentHealth += Math.Min(baseStats.maxHealth - baseStats.currentHealth, lifeStolen);
+        
     }
 }

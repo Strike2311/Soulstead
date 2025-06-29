@@ -3,7 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "DamageModifierIncreaseEffect", menuName = "Perks/Damage Modifier Increase")]
 public class DamageModifierIncreaseEffect : PerkEffect
 {
-    public int bonusValue = 5;
+    public float bonusValue = 0.05f;
 
     public override void Apply(PlayerStatsData stats)
     {

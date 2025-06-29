@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
     public GameObject startMenu;
     public GameObject gameOverMenu;
     public GameObject player;
+    public PlayerStatsData playerStats;
 
     private bool isGameOver = false;
 
@@ -18,6 +19,7 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
+        playerStats.InitializeStats();
         startMenu.SetActive(false);
         Time.timeScale = 1f; // Unpause game
     }

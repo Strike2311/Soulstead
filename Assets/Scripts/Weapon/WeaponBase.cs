@@ -13,6 +13,7 @@ public abstract class WeaponBase : MonoBehaviour
 
     protected float attackCooldown = 0f;
     protected Transform target;
+    public PlayerStatsData playerStats;
 
     // Static list to prevent duplicate targeting
 
@@ -32,7 +33,7 @@ public abstract class WeaponBase : MonoBehaviour
 
     protected virtual void ResetCooldown()
     {
-        attackCooldown = 1f / attackRate;
+        attackCooldown = 1f / (attackRate + attackRate * playerStats.attackSpeed);
     }
 
     protected virtual void FireAt(Transform target)
